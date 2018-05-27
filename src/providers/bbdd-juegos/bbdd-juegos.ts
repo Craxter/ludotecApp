@@ -45,4 +45,8 @@ export class BbddJuegosProvider {
   buscaUsuarios(campo: String): Observable<Usuario[]> {
     return this.http.get(`${this.origen}/propietarios/findOne?_where=(nombre,like,${campo}%)`) as Observable<Usuario[]>;
   }
+
+  login(user:String, pass: String): Observable<Usuario> {
+    return this.http.get(`${this.origen}/propietarios?_fields=ID,nombre&_where=(nombre,eq,${user})~and(pass,eq,${pass})`) as Observable<Usuario>;
+  }
 }

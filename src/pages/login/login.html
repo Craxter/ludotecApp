@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Iniciar Sesion</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div padding>
+    <ion-row>
+      <ion-col>
+        <img class="logo" src="assets/imgs/default-game.png" />
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <form (ngSubmit)="login()">
+          <ion-list inset class="no-border">
+            <ion-item>
+              <ion-label>Usuario</ion-label>
+              <ion-input type="text" [(ngModel)]="user.nombre" name="nombre"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Contraseña</ion-label>
+              <ion-input type="password" [(ngModel)]="user.pass" ngOnChange name="pass"></ion-input>
+            </ion-item>
+          </ion-list>
+        </form>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button class="login-button" (click)="login()" [disabled]="!validar()">Iniciar sesión</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div (click)="goToSignup()">
+          <span>O crea una nueva cuenta</span>
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

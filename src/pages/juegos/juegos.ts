@@ -5,13 +5,6 @@ import { Juego } from "../../models/juego";
 import { BbddJuegosProvider } from "../../providers/bbdd-juegos/bbdd-juegos";
 import { DetallePage } from '../detalle/detalle';
 
-/**
- * Generated class for the JuegosPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-juegos',

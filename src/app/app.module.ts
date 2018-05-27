@@ -19,6 +19,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { BbddJuegosProvider } from '../providers/bbdd-juegos/bbdd-juegos';
 import { ConfiguracionProvider } from '../providers/configuracion/configuracion';
+import { LoginPage } from '../pages/login/login';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ConfiguracionProvider } from '../providers/configuracion/configuracion'
     DetallePage,
     UsuariosPage,
     PerfilPage,
-    AjustesPage
+    AjustesPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { ConfiguracionProvider } from '../providers/configuracion/configuracion'
     DetallePage,
     UsuariosPage,
     PerfilPage,
-    AjustesPage
+    AjustesPage,
+    LoginPage
   ],
   providers: [
     StatusBar,

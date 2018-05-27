@@ -12,7 +12,7 @@
 
 <ion-content padding>
   <ion-avatar>
-    <img [src]="juego?.img">
+    <img [src]="juego?.img" onerror="this.src='assets/imgs/default-game.png'">
   </ion-avatar>
   <ion-title>{{juego?.nombre}}</ion-title>
   <ion-list>

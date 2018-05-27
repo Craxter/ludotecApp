@@ -11,6 +11,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AjustesPage } from '../pages/ajustes/ajustes';
 import { ConfiguracionProvider } from '../providers/configuracion/configuracion';
 import { Usuario } from '../models/usuario';
+import { LoginPage } from '../pages/login/login';
 
 
 @Component({
@@ -60,4 +61,10 @@ export class MyApp {
     // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
   }
+  
+  inicioSesion(){
+    this.menu.close();
+    this.nav.push(LoginPage, {}, {animate: true, duration: 500});
+  }
+
 }

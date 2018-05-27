@@ -21,15 +21,15 @@
 
 .header {
     .toolbar-background {
-//        background-color: color($colors, primary, base);
+       background-color: color($colors, primary, base);
     }
     ion-icon{
-        // color: #fff;
+        color: #fff;
     }
 }
 
 .toolbar-title {
-//   color: #fff;
+  color: #fff;
 }
 
 #menu-material {
@@ -38,11 +38,11 @@
         background-color: color($colors, primary, base);
         background-size: cover;
         color: white;
-        .name {
-            font-weight: 500;
+        .login {
+            font-weight: bold;
             margin-bottom: 3px;
         }
-        .e-mail {
+        .name {
             margin-top: 0;
             margin-bottom: 5px;
         }
