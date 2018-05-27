@@ -16,8 +16,9 @@ import { AjustesPage } from '../pages/ajustes/ajustes';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { BbddJuegosProvider } from '../providers/bbdd-juegos/bbdd-juegos';
-import { SettingsProvider } from '../providers/settings/settings';
+import { ConfiguracionProvider } from '../providers/configuracion/configuracion';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { SettingsProvider } from '../providers/settings/settings';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     BbddJuegosProvider,
-    SettingsProvider
+    ConfiguracionProvider
   ]
 })
 export class AppModule { }

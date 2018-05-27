@@ -10,17 +10,17 @@
 
 <ion-content padding>
 
-  <h3>Welcome to your first Ionic app!</h3>
+  <h3>¡Bienvenido a tu ludoteca!</h3>
 
   <p>
-    This starter project is our way of helping you get a functional app running in record time.
+    En esta aplicación podrás guardar tu colección de juegos de mesa, puntuar tus juegos, ver los de tus amigos y mucho más
   </p>
   <p>
-    Follow along on the tutorial section of the Ionic docs!
+    Para empezar, echa un vistazo al catálogo de juegos.
   </p>
-  <p>
-    <button ion-button color="primary" menuToggle>Toggle Menu</button>
-    <button ion-button color="primary" (click)="verJuegos()">Juegos</button>
-  </p>
+  <div padding id="botones">
+    <button ion-button color="primary" (click)="verJuegos()">Ir al catálogo</button>
+    <button ion-button color="primary" (click)="inicioSesion()">Iniciar Sesión</button>
+  </div>
 
 </ion-content>

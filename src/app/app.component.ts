@@ -9,7 +9,8 @@ import { UsuariosPage } from '../pages/usuarios/usuarios';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AjustesPage } from '../pages/ajustes/ajustes';
-import { SettingsProvider } from '../providers/settings/settings';
+import { ConfiguracionProvider } from '../providers/configuracion/configuracion';
+import { Usuario } from '../models/usuario';
 
 
 @Component({
@@ -22,26 +23,26 @@ export class MyApp {
   rootPage = HelloIonicPage;
   selectedTheme: String;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
+  user: Usuario;
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public setting: SettingsProvider
+    public setting: ConfiguracionProvider
   ) {
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
-      { title: 'Hello Ionic', component: HelloIonicPage },
       { title: 'Juegos', component: JuegosPage },
       { title: 'Usuarios', component: UsuariosPage },
       { title: 'Ajustes', component: AjustesPage }
     ];
 
-    this.setting.seleccionarTema().then((data) => this.selectedTheme=data);
+    this.setting.seleccionarTema().subscribe((data) => this.selectedTheme = data);
   }
 
   initializeApp() {

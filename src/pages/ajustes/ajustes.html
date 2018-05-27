@@ -17,9 +17,9 @@
 
 
 <ion-content padding>
-  <ion-item>
-    <ion-icon name="bulb" item-left></ion-icon>
-    <ion-label (click)="cambiarModo()">Modo nocturno</ion-label>
-    <ion-toggle [(ngModel)]="nocturno"></ion-toggle>
+  <ion-item (click)="cambiarModo()">
+    <ion-icon id="bulb" name="bulb" item-left></ion-icon>
+    <ion-label>Modo nocturno</ion-label>
+    <ion-toggle [checked]="tema==='dark-theme'"></ion-toggle>
   </ion-item>
 </ion-content>

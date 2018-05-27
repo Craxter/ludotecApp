@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { SettingsProvider } from '../../providers/settings/settings';
-
-/**
- * Generated class for the AjustesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, ToastController, Toast } from 'ionic-angular';
+import { ConfiguracionProvider } from '../../providers/configuracion/configuracion';
 
 @IonicPage()
 @Component({
@@ -16,22 +9,35 @@ import { SettingsProvider } from '../../providers/settings/settings';
 })
 export class AjustesPage {
 
-  nocturno: boolean;
+  tema: String;
+  toast: Toast;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public setting: SettingsProvider) { }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AjustesPage');
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public toastCtrl: ToastController,
+    public setting: ConfiguracionProvider
+  ) {
+    this.setting.seleccionarTema().subscribe((res) => this.tema = res);
+    this.recogerModo();
   }
 
   cambiarModo() {
-    if (!this.nocturno) {
+    if (this.tema === 'light-theme') {
       this.setting.cambiarTema('dark-theme');
-      this.nocturno = true;
     } else {
       this.setting.cambiarTema('light-theme');
-      this.nocturno = false;
     }
-    this.setting.seleccionarTema().then((data) => console.log(data));
+    this.toast.present();
+  }
+
+  recogerModo() {
+    this.setting.seleccionarTema().subscribe((res) => {
+      let mensaje = 'Modo nocturno';
+      res === 'dark-theme' ? mensaje += ' activado' : mensaje += ' desactivado';
+      this.toast = this.toastCtrl.create({
+        message: mensaje,
+        duration: 3000
+      });
+    });
   }
 }

@@ -14,3 +14,41 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.round {
+    border-radius: 50%;
+}
+
+.header {
+    .toolbar-background {
+//        background-color: color($colors, primary, base);
+    }
+    ion-icon{
+        // color: #fff;
+    }
+}
+
+.toolbar-title {
+//   color: #fff;
+}
+
+#menu-material {
+    .menu-header {
+        padding: 5px 15px;
+        background-color: color($colors, primary, base);
+        background-size: cover;
+        color: white;
+        .name {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        .e-mail {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+    }
+    .user-avatar {
+        padding: .5em;
+        height: 12vh;
+    }
+}
