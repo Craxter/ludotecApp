@@ -14,7 +14,7 @@ import { Usuario } from "../../models/usuario";
 @Injectable()
 export class BbddJuegosProvider {
 
-  origen = 'http://localhost:3000/api';
+  origen = 'http://217.217.176.17:3000/api';
 
   constructor(public http: HttpClient) {
     console.log('Hello BbddJuegosProvider Provider');
