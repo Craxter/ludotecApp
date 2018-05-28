@@ -12,6 +12,7 @@ import { AjustesPage } from '../pages/ajustes/ajustes';
 import { ConfiguracionProvider } from '../providers/configuracion/configuracion';
 import { Usuario } from '../models/usuario';
 import { LoginPage } from '../pages/login/login';
+import { PerfilPage } from '../pages/perfil/perfil';
 
 
 @Component({
@@ -44,6 +45,9 @@ export class MyApp {
     ];
 
     this.setting.seleccionarTema().subscribe((data) => this.selectedTheme = data);
+    setting.recogerUsuario().then((data) => { this.user = data });
+    console.log(this.user);
+
   }
 
   initializeApp() {
@@ -61,10 +65,15 @@ export class MyApp {
     // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
   }
-  
-  inicioSesion(){
+
+  inicioSesion() {
     this.menu.close();
-    this.nav.push(LoginPage, {}, {animate: true, duration: 500});
+    this.nav.push(LoginPage, {}, { animate: true, duration: 500 });
   }
 
+  verPerfil() {
+    const ID = this.user.ID;
+    this.menu.close();
+    this.nav.setRoot(PerfilPage, { ID });
+  }
 }

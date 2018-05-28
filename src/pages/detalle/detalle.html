@@ -15,9 +15,11 @@
     <img [src]="juego?.img" onerror="this.src='assets/imgs/default-game.png'">
   </ion-avatar>
   <ion-title>{{juego?.nombre}}</ion-title>
-  <ion-list>
-    <ion-item>
-      <ion-badge>{{juego?.minJugadores}}-{{juego?.maxJugadores}} jugadores</ion-badge>
-    </ion-item>
-  </ion-list>
+  <ion-badge>{{juego?.minJugadores}}-{{juego?.maxJugadores}} jugadores</ion-badge>
+  <ion-badge (click)="votar(1)">
+    <ion-icon name="thumbs-up"></ion-icon> {{positivo}}
+  </ion-badge>
+  <ion-badge (click)="votar(0)">
+    <ion-icon name="thumbs-down"></ion-icon> {{negativo}}
+  </ion-badge>
 </ion-content>

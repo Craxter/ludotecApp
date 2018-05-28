@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { BbddJuegosProvider } from '../../providers/bbdd-juegos/bbdd-juegos';
 import { ConfiguracionProvider } from '../../providers/configuracion/configuracion';
+import { PerfilPage } from '../perfil/perfil';
 
 @IonicPage()
 @Component({
@@ -28,20 +29,23 @@ export class LoginPage {
   login() {
     this.bbddJuegos.login(this.user.nombre, this.user.pass).subscribe(login => {
       console.log(login);
-      const alert = this.alertCtrl.create({
-        title: '¡Sesión iniciada!',
-        subTitle: `${login.ID}: ${login.nombre}`,
-        buttons: ['Cerrar']
-      });
-      alert.present();
+      if (login.length > 0) {
+        const ID = login[0].ID;
+        const alert = this.alertCtrl.create({
+          title: '¡Sesión iniciada!',
+          subTitle: `Has iniciado sesión como ${login[0].nombre}`,
+          buttons: ['Cerrar']
+        });
+        alert.present().then((x) => {
+          this.config.guardarUsuario(login[0]);
+          this.navCtrl.setRoot(PerfilPage, { ID });
+        });
+      }
     });
   }
 
   validar() {
     let res;
-    if(this.user.nombre !== null)
-    console.log(this.user.nombre.length);
-    
     (this.user.nombre !== null && this.user.nombre.length > 3) && (this.user.pass !== null && this.user.pass.length > 3) ? res = true : res = false;
     return res;
   }

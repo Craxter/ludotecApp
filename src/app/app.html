@@ -5,7 +5,7 @@
       <img class="user-avatar round" src="assets/imgs/default-game.png"
       />
       <ng-container *ngIf="user!=null">
-        <p class="name">{{user.nombre}}</p>
+        <p class="name" (click)="verPerfil()">Hola, {{user.nombre}}</p>
       </ng-container>
       <ng-container *ngIf="user==null">
         <p class="login" (click)="inicioSesion()">Iniciar sesión</p>
