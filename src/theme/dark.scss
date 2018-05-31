@@ -49,4 +49,9 @@
     color: #fff;
     font-weight: 400;
   }
+
+  :host /deep/ .alerta {
+    background-color: #333;
+    color: white;  
+  }
 }  

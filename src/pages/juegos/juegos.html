@@ -21,9 +21,9 @@
   <ion-searchbar animated placeholder="Busca tu juego" (ionInput)="buscar($event)"></ion-searchbar>
   <ion-list no-lines>
     <button ion-item *ngFor="let juego of juegos" (click)="verDetalles(juego.ID)">
-      <ion-avatar item-left>
+      <ion-thumbnail item-left>
         <img [src]="juego.img" onerror="this.src='assets/imgs/default-game.png'">
-      </ion-avatar>
+      </ion-thumbnail>
       <h2>{{ juego.nombre }}</h2>
       <ion-icon name="arrow-forward" item-right></ion-icon>
     </button>

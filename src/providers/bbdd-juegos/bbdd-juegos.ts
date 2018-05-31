@@ -43,8 +43,13 @@ export class BbddJuegosProvider {
     return this.http.get(`${this.origen}/propietarios/findOne?_where=(nombre,eq,${user})~and(pass,eq,${pass})`) as Observable<Usuario[]>;
   }
 
-  votar(juego,voto) {
-    const user = this.setting.getUsuario();
+  votosUsuario(IDUsuario) {
+    return this.http.get(`${this.origen}/propietarios/${IDUsuario}/puntuacion?_fields=IDJuego,puntuacion`) as Observable<any[]>;
+  }
+
+  votar(juego, voto) {
+    let user;
+    this.setting.getUsuario().subscribe((res) => { user = res });
     const dto = { IDUsuario: user.ID, IDJuego: juego, puntuacion: voto };
     return this.http.put(`${this.origen}/puntuacion`, dto);
   }

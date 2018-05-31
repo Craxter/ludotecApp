@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { Platform, MenuController, Nav } from 'ionic-angular';
+import { Platform, MenuController, Nav, AlertController } from 'ionic-angular';
 
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { JuegosPage } from '../pages/juegos/juegos';
@@ -24,16 +24,16 @@ export class MyApp {
   // make HelloIonicPage the root (or first) page
   rootPage = HelloIonicPage;
   selectedTheme: String;
-
   pages: Array<{ title: string, component: any }>;
-  user: Usuario;
+  user: Usuario = null;
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public setting: ConfiguracionProvider
+    public setting: ConfiguracionProvider,
+    public alertCtrl: AlertController
   ) {
     this.initializeApp();
 
@@ -45,9 +45,7 @@ export class MyApp {
     ];
 
     this.setting.seleccionarTema().subscribe((data) => this.selectedTheme = data);
-    setting.recogerUsuario().then((data) => { this.user = data });
-    console.log(this.user);
-
+    this.setting.getUsuario().subscribe((data) => this.user = data);
   }
 
   initializeApp() {
@@ -67,6 +65,7 @@ export class MyApp {
   }
 
   inicioSesion() {
+    console.log(this.user, this.setting.getUsuario());
     this.menu.close();
     this.nav.push(LoginPage, {}, { animate: true, duration: 500 });
   }
@@ -75,5 +74,30 @@ export class MyApp {
     const ID = this.user.ID;
     this.menu.close();
     this.nav.setRoot(PerfilPage, { ID });
+  }
+
+  logout() {
+    let alert;
+    alert = this.alertCtrl.create({
+      title: 'Cerrar sesión',
+      subTitle: `¿Está seguro que desea cerrar la sesión?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancelar',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.setting.guardarUsuario(null);
+            this.menu.close();
+            this.nav.setRoot(HelloIonicPage);
+          }
+        }
+      ]
+    }).present();
   }
 }

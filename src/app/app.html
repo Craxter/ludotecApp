@@ -2,13 +2,17 @@
 
   <ion-content>
     <div class="menu-header">
-      <img class="user-avatar round" src="assets/imgs/default-game.png"
-      />
-      <ng-container *ngIf="user!=null">
-        <p class="name" (click)="verPerfil()">Hola, {{user.nombre}}</p>
-      </ng-container>
+      <img class="user-avatar round" src="assets/imgs/default-game.png" />
+      <div>
+        <ng-container *ngIf="user!=null">
+          <p>
+            <span class="nombre" (click)="verPerfil()">Hola, {{user.nombre}}</span>
+            <span (click)="logout()">(Cerrar sesión)</span>
+          </p>
+        </ng-container>
+      </div>
       <ng-container *ngIf="user==null">
-        <p class="login" (click)="inicioSesion()">Iniciar sesión</p>
+        <p class="nombre" (click)="inicioSesion()">Iniciar sesión</p>
       </ng-container>
     </div>
     <ion-list no-lines>

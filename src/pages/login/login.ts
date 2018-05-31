@@ -28,18 +28,26 @@ export class LoginPage {
 
   login() {
     this.bbddJuegos.login(this.user.nombre, this.user.pass).subscribe(login => {
-      console.log(login);
+      let alert;
       if (login.length > 0) {
         const ID = login[0].ID;
-        const alert = this.alertCtrl.create({
+        alert = this.alertCtrl.create({
           title: '¡Sesión iniciada!',
           subTitle: `Has iniciado sesión como ${login[0].nombre}`,
+          cssClass: 'alerta',
           buttons: ['Cerrar']
         });
         alert.present().then((x) => {
           this.config.guardarUsuario(login[0]);
           this.navCtrl.setRoot(PerfilPage, { ID });
         });
+      } else {
+        alert = this.alertCtrl.create({
+          title: '¡Error!',
+          subTitle: `Usuario o contraseña incorrectos`,
+          cssClass: 'alerta',          
+          buttons: ['Cerrar']
+        }).present();
       }
     });
   }
