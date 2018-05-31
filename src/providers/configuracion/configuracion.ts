@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { Usuario } from '../../models/usuario';
-import { Observable } from 'rxjs/observable';
 
 const STORAGE_TEMA = 'selected-theme';
 const STORAGE_USER = 'user'
+
 @Injectable()
 export class ConfiguracionProvider {
 
