@@ -35,7 +35,7 @@ export class DetallePage {
   ) {
     this.id = navParams.get('ID');
     this.propietario = false;
-    bbddJuegos.cargaJuego(this.id).subscribe(resultado => { this.juego = resultado[0]; console.log(this.juego); });
+    bbddJuegos.cargaJuego(this.id).subscribe(resultado => { this.juego = resultado[0] });
     bbddJuegos.recogerVotos(this.id).subscribe((res) => {
       for (const punt of res) {
         if (Number(punt.puntuacion) > 0) { this.positivo++ }

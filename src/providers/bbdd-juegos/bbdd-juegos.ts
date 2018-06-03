@@ -26,21 +26,6 @@ export class BbddJuegosProvider {
   buscaJuegos(campo: String): Observable<Juego[]> {
     return this.http.get(`${this.origen}/juegos?_where=(nombre,like,${campo}~)&_sort=nombre`) as Observable<Juego[]>;
   }
-  cargaUsuarios(): Observable<Usuario[]> {
-    return this.http.get(`${this.origen}/propietarios?_size=99`) as Observable<Usuario[]>;
-  }
-
-  cargaUsuario(id: String): Observable<Usuario[]> {
-    return this.http.get(`${this.origen}/propietarios/${id}`) as Observable<Usuario[]>;
-  }
-
-  cargaJuegosUsuario(id: String): Observable<Juego[]> {
-    return this.http.get(`${this.origen}/xjoin?_join=j.juegos,_j,pj.propietariosjuegos&_on1=(j.ID,eq,pj.IDJuego)&_fields=j.ID,j.nombre,j.img&_size=99&_sort=j.nombre&_where=(IDPropietario,eq,${id})`) as Observable<Juego[]>;
-  }
-
-  buscaUsuarios(campo: String): Observable<Usuario[]> {
-    return this.http.get(`${this.origen}/propietarios/findOne?_where=(nombre,like,${campo}%)`) as Observable<Usuario[]>;
-  }
 
   login(user: String, pass: String): Observable<Usuario[]> {
     return this.http.get(`${this.origen}/propietarios/findOne?_where=(nombre,eq,${user})~and(pass,eq,${pass})`) as Observable<Usuario[]>;
@@ -55,8 +40,24 @@ export class BbddJuegosProvider {
     return this.http.put(`${this.origen}/propietarios/`, dto) as Observable<Usuario[]>;
   }
 
+  cargaUsuarios(): Observable<Usuario[]> {
+    return this.http.get(`${this.origen}/propietarios?_size=99`) as Observable<Usuario[]>;
+  }
+
+  cargaUsuario(id: String): Observable<Usuario[]> {
+    return this.http.get(`${this.origen}/propietarios/${id}`) as Observable<Usuario[]>;
+  }
+
+  cargaJuegosUsuario(id: String): Observable<any[]> {
+    return this.http.get(`${this.origen}/xjoin?_join=j.juegos,_j,pj.propietariosjuegos&_on1=(j.ID,eq,pj.IDJuego)&_fields=j.ID,j.nombre,j.img&_size=99&_sort=j.nombre&_where=(IDPropietario,eq,${id})`) as Observable<any[]>;
+  }
+
+  buscaUsuarios(campo: String): Observable<Usuario[]> {
+    return this.http.get(`${this.origen}/propietarios/findOne?_where=(nombre,like,${campo}%)`) as Observable<Usuario[]>;
+  }
+
   votosUsuario(IDUsuario) {
-    return this.http.get(`${this.origen}/propietarios/${IDUsuario}/puntuacion?_fields=IDJuego,puntuacion`) as Observable<any[]>;
+    return this.http.get(`${this.origen}/propietarios/${IDUsuario}/puntuacion`) as Observable<any[]>;
   }
 
   votar(juego, voto) {
