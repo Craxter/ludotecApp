@@ -21,9 +21,9 @@
   </ion-item>
   <ion-list>
     <button ion-item *ngFor="let juego of coleccion" (click)="verDetalles(juego.j_ID)">
-      <ion-avatar item-left>
+      <ion-thumbnail item-left>
         <img [src]="juego.j_img" onerror="this.src='assets/imgs/default-game.png'">
-      </ion-avatar>
+      </ion-thumbnail>
       <h2>{{ juego.j_nombre }}</h2>
     </button>
   </ion-list>

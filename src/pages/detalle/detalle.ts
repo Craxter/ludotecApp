@@ -21,6 +21,7 @@ export class DetallePage {
 
   id: string;
   idUser: string;
+  propietario: boolean;
   juego: Juego;
   positivo: number = 0;
   negativo: number = 0;
@@ -33,6 +34,7 @@ export class DetallePage {
     public toastCtrl: ToastController
   ) {
     this.id = navParams.get('ID');
+    this.propietario = false;
     bbddJuegos.cargaJuego(this.id).subscribe(resultado => { this.juego = resultado[0]; console.log(this.juego); });
     bbddJuegos.recogerVotos(this.id).subscribe((res) => {
       for (const punt of res) {
@@ -43,6 +45,14 @@ export class DetallePage {
     this.setting.getUsuario().subscribe((res) => {
       if (res !== null) {
         this.idUser = res.ID
+        bbddJuegos.cargaJuegosUsuario(res.ID).subscribe((juegos) => {
+          for (const juego of juegos) {
+            if (juego.j_ID === this.id) {
+              this.propietario = true;
+              break;
+            }
+          }
+        });
       } else {
         this.idUser = null
       }
@@ -81,6 +91,17 @@ export class DetallePage {
           duration: 3000
         }).present();
       });
+    }
+  }
+
+  agregarJuego() {
+    console.log('entra');
+    if (!this.propietario) {
+      console.log('guarda');
+      this.bbddJuegos.guardarJuegoColeccion(this.id).subscribe((res) => this.propietario = true);
+    } else {
+      console.log('borra');
+      this.bbddJuegos.borrarJuegoColeccion(this.id).subscribe((res) => this.propietario = false);
     }
   }
 }

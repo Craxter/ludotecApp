@@ -10,8 +10,11 @@ import { ConfiguracionProvider } from '../configuracion/configuracion';
 export class BbddJuegosProvider {
 
   origen = 'http://217.217.176.17:3030/api';
+  user: Usuario;
 
-  constructor(public http: HttpClient, public setting: ConfiguracionProvider) { }
+  constructor(public http: HttpClient, public setting: ConfiguracionProvider) {
+    this.setting.getUsuario().subscribe((res) => { this.user = res });
+  }
 
   cargaJuegos(): Observable<Juego[]> {
     return this.http.get(`${this.origen}/juegos?_size=99&_sort=nombre`) as Observable<Juego[]>;
@@ -57,13 +60,20 @@ export class BbddJuegosProvider {
   }
 
   votar(juego, voto) {
-    let user;
-    this.setting.getUsuario().subscribe((res) => { user = res });
-    const dto = { IDUsuario: user.ID, IDJuego: juego, puntuacion: voto };
+    const dto = { IDUsuario: this.user.ID, IDJuego: juego, puntuacion: voto };
     return this.http.put(`${this.origen}/puntuacion`, dto);
   }
 
   recogerVotos(IDJuego) {
     return this.http.get(`${this.origen}/juegos/${IDJuego}/puntuacion`) as Observable<any[]>;
+  }
+
+  guardarJuegoColeccion(idJuego) {
+    const dto = { IDJuego: idJuego, IDPropietario: this.user.ID }
+    return this.http.post(`${this.origen}/propietariosjuegos`, dto);
+  }
+
+  borrarJuegoColeccion(idJuego) {
+    return this.http.delete(`${this.origen}/propietariosjuegos/${idJuego}___${this.user.ID}`);
   }
 }

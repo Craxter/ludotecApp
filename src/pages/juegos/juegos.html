@@ -17,6 +17,9 @@
 
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="actualizar($event)">
+    <ion-refresher-content pullingText="Arrastra para actualizar"></ion-refresher-content>
+  </ion-refresher>
   <ion-title>Lista de juegos</ion-title>
   <ion-searchbar animated placeholder="Busca tu juego" (ionInput)="buscar($event)"></ion-searchbar>
   <ion-list no-lines>
