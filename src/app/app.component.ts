@@ -24,7 +24,7 @@ export class MyApp {
   // make HelloIonicPage the root (or first) page
   rootPage = HelloIonicPage;
   selectedTheme: String;
-  pages: Array<{ title: string, component: any }>;
+  pages: Array<{ title: string, component: any, icon: string }>;
   user: Usuario = null;
 
   constructor(
@@ -39,9 +39,9 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Juegos', component: JuegosPage },
-      { title: 'Usuarios', component: UsuariosPage },
-      { title: 'Ajustes', component: AjustesPage }
+      { title: 'Juegos', component: JuegosPage, icon: 'clipboard' },
+      { title: 'Usuarios', component: UsuariosPage, icon: 'people' },
+      { title: 'Ajustes', component: AjustesPage, icon: 'settings' }
     ];
 
     this.setting.seleccionarTema().subscribe((data) => this.selectedTheme = data);
@@ -77,8 +77,7 @@ export class MyApp {
   }
 
   logout() {
-    let alert;
-    alert = this.alertCtrl.create({
+    this.alertCtrl.create({
       title: 'Cerrar sesión',
       subTitle: `¿Está seguro que desea cerrar la sesión?`,
       buttons: [
@@ -86,14 +85,14 @@ export class MyApp {
           text: 'Cancelar',
           role: 'cancelar',
           handler: () => {
-            console.log('Cancel clicked');
+            console.log('Operacion cancelada');
           }
         },
         {
           text: 'Aceptar',
           handler: () => {
-            this.setting.guardarUsuario(null);
             this.menu.close();
+            this.setting.guardarUsuario(null);
             this.nav.setRoot(HelloIonicPage);
           }
         }

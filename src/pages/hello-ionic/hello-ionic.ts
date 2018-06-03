@@ -10,13 +10,18 @@ import { ConfiguracionProvider } from '../../providers/configuracion/configuraci
   templateUrl: 'hello-ionic.html'
 })
 export class HelloIonicPage {
-  constructor(public navCtrl: NavController, public setting: ConfiguracionProvider) { }
+
+  private user;
+
+  constructor(public navCtrl: NavController, public setting: ConfiguracionProvider) {
+    this.setting.recogerUsuario().then((res) => this.user = res);
+  }
 
   verJuegos() {
     this.navCtrl.setRoot(JuegosPage, {}, { animate: true, duration: 250 });
   }
 
-  inicioSesion(){
-    this.navCtrl.push(LoginPage, {}, {animate: true, duration: 500});
+  inicioSesion() {
+    this.navCtrl.push(LoginPage, {}, { animate: true, duration: 500 });
   }
 }

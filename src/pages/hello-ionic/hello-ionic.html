@@ -15,9 +15,9 @@
   <p>
     En esta aplicación podrás guardar tu colección de juegos de mesa, puntuar tus juegos, ver los de tus amigos y mucho más
   </p>
-  <div padding id="botones">
-    <button ion-button (click)="verJuegos()">Ir al catálogo</button>
-    <button ion-button *ngIf="setting.getUsuario()===null" (click)="inicioSesion()">Iniciar Sesión</button>
+  <div id="botones">
+      <button ion-button (click)="verJuegos()">Ir al catálogo</button>
+    <button ion-button *ngIf="user == null" (click)="inicioSesion()">Iniciar Sesión</button>
   </div>
 
 </ion-content>

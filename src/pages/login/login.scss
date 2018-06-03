@@ -1,26 +1,42 @@
 page-login {
     .logo {
+        border-radius: 50%;
         width: 50%;
-        height: auto;
         max-width: 12em;
-        margin: 0 auto;
-        padding-bottom: 50px;
+        margin-bottom: 50px;
     }
     .no-border {
-        border-bottom: 0 !important;
-        box-shadow: none !important;
+        border-bottom: 0;
+        box-shadow: none;
+        border-radius: 5% !important;
     }
     ion-row {
         align-items: center;
         text-align: center;
     }
-    @media only screen and (min-width: 768px) {
-    ion-col.col {
-        margin: 0 auto;
-        max-width: 40%;
+    ion-label {
+        padding-left: 5%;
     }
+    @media only screen and (min-width: 768px) {
+        ion-col.col {
+            margin: 0 auto;
+            max-width: 40%;
+        }
     }
     .login-button {
         width: 100%;
+    }
+    .toolbar-background {
+        background: transparent;
+    }
+    background-image: url('../assets/imgs/bg.png');
+}
+
+.dark-theme,
+.light-theme {
+    page-login {
+        ion-content {
+            background: none;
+        }
     }
 }

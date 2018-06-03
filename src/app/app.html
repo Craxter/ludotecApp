@@ -1,23 +1,28 @@
 <ion-menu [content]="content" id="menu-material" [class]="selectedTheme">
-
-  <ion-content>
-    <div class="menu-header">
-      <img class="user-avatar round" src="assets/imgs/dice-logo.png" />
-      <div>
-        <ng-container *ngIf="user!=null">
-          <p>
-            <span class="nombre" (click)="verPerfil()">Hola, {{user.nombre}}</span>
-            <span (click)="logout()">(Cerrar sesión)</span>
-          </p>
-        </ng-container>
-      </div>
-      <ng-container *ngIf="user==null">
-        <p class="nombre" (click)="inicioSesion()">Iniciar sesión</p>
+  <ion-header>
+    <ion-avatar>
+      <img src="assets/imgs/dice-logo.png" />
+    </ion-avatar>
+    <div>
+      <ng-container *ngIf="user!=null">
+        <p>
+          <span class="nombre" (click)="verPerfil()">Hola,
+            <span class="login">{{user.nombre}}</span>
+          </span>
+          <span (click)="logout()">(Cerrar sesión)</span>
+        </p>
       </ng-container>
     </div>
+    <ng-container *ngIf="user==null">
+      <p class="nombre">No has iniciado sesión,
+        <span class="login" (click)="inicioSesion()">haz click aqui</span>
+      </p>
+    </ng-container>
+  </ion-header>
+  <ion-content>
     <ion-list no-lines>
-      <button menuClose="left" ion-item detail-none *ngFor="let p of pages" (click)="openPage(p)">
-        <ion-icon [name]="p.icon" item-left></ion-icon>
+      <button ion-item detail-none *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon [name]="p.icon"></ion-icon>
         {{p.title}}
       </button>
     </ion-list>

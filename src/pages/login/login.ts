@@ -11,7 +11,7 @@ import { PerfilPage } from '../perfil/perfil';
 })
 export class LoginPage {
 
-  public backgroundImage = 'assets/imgs/bg.png';
+  validado: boolean = false;
 
   private user = { nombre: null, pass: null };
 
@@ -34,7 +34,6 @@ export class LoginPage {
         alert = this.alertCtrl.create({
           title: '¡Sesión iniciada!',
           subTitle: `Has iniciado sesión como ${login[0].nombre}`,
-          cssClass: 'alerta',
           buttons: ['Cerrar']
         });
         alert.present().then((x) => {
@@ -45,7 +44,34 @@ export class LoginPage {
         alert = this.alertCtrl.create({
           title: '¡Error!',
           subTitle: `Usuario o contraseña incorrectos`,
-          cssClass: 'alerta',          
+          buttons: ['Cerrar']
+        }).present();
+      }
+    });
+  }
+
+  signup() {
+    this.bbddJuegos.comprobarUsuario(this.user.nombre).subscribe(res => {
+      let alert;
+      console.log(res);
+      if (res.length === 0) {
+        this.bbddJuegos.signup(this.user.nombre, this.user.pass).subscribe((login) => {
+          alert = this.alertCtrl.create({
+            title: '¡Bienvenido a bordo!',
+            subTitle: `Usuario registrado con éxito`,
+            buttons: ['Cerrar']
+          }).present().then((x) => {
+            this.bbddJuegos.login(this.user.nombre, this.user.pass).subscribe(login => {
+              const ID = login[0].ID;
+              this.config.guardarUsuario(login[0]);
+              this.navCtrl.setRoot(PerfilPage, { ID });
+            });
+          });
+        });
+      } else {
+        alert = this.alertCtrl.create({
+          title: '¡Error!',
+          subTitle: `El usuario ya existe, prueba con otro nombre`,
           buttons: ['Cerrar']
         }).present();
       }
@@ -53,8 +79,6 @@ export class LoginPage {
   }
 
   validar() {
-    let res;
-    (this.user.nombre !== null && this.user.nombre.length > 3) && (this.user.pass !== null && this.user.pass.length > 3) ? res = true : res = false;
-    return res;
+    this.validado = (this.user.nombre !== null && this.user.nombre.length > 3) && (this.user.pass !== null && this.user.pass.length > 3);
   }
 }

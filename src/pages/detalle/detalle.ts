@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { Juego } from '../../models/juego';
 import { BbddJuegosProvider } from '../../providers/bbdd-juegos/bbdd-juegos';
@@ -20,6 +20,7 @@ import { ConfiguracionProvider } from '../../providers/configuracion/configuraci
 export class DetallePage {
 
   id: string;
+  idUser: string;
   juego: Juego;
   positivo: number = 0;
   negativo: number = 0;
@@ -28,7 +29,8 @@ export class DetallePage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public bbddJuegos: BbddJuegosProvider,
-    public setting: ConfiguracionProvider
+    public setting: ConfiguracionProvider,
+    public toastCtrl: ToastController
   ) {
     this.id = navParams.get('ID');
     bbddJuegos.cargaJuego(this.id).subscribe(resultado => { this.juego = resultado[0]; console.log(this.juego); });
@@ -38,16 +40,23 @@ export class DetallePage {
         if (Number(punt.puntuacion) < 0) { this.negativo++ }
       }
     });
-    let user;
-    this.setting.getUsuario().subscribe((res) => { user = res });
-    bbddJuegos.votosUsuario(user.ID).subscribe((res) => {
-      for (const puntuacion of res) {
-        if (puntuacion.IDJuego === this.id) {
-          this.voto = puntuacion.puntuacion;
-          break;
-        }
+    this.setting.getUsuario().subscribe((res) => {
+      if (res !== null) {
+        this.idUser = res.ID
+      } else {
+        this.idUser = null
       }
     });
+    if (this.idUser !== null) {
+      bbddJuegos.votosUsuario(this.idUser).subscribe((res) => {
+        for (const puntuacion of res) {
+          if (puntuacion.IDJuego === this.id) {
+            this.voto = puntuacion.puntuacion;
+            break;
+          }
+        }
+      });
+    }
   }
 
   ionViewDidLoad() {
@@ -55,18 +64,23 @@ export class DetallePage {
   }
 
   votar(voto) {
-    if (this.setting.getUsuario() !== null && this.voto !== voto) {
-      if (voto > 0) { this.positivo++ };
-      if (voto < 0) { this.negativo++ };
-      if (this.voto > 0) { this.positivo-- };
-      if (this.voto < 0) { this.negativo-- };
-      this.voto = voto;
-    } else {
-      if (this.voto > 0) { this.positivo-- };
-      if (this.voto < 0) { this.negativo-- };
-      this.voto = 0;
+    if (this.idUser !== null) {
+      if (this.voto !== voto) {
+        voto > 0 ? this.positivo++ : this.negativo++;
+        if (this.voto !== 0) {
+          this.voto > 0 ? this.positivo-- : this.negativo--;
+        }
+        this.voto = voto;
+      } else {
+        voto > 0 ? this.positivo-- : this.negativo--;
+        this.voto = 0;
+      }
+      this.bbddJuegos.votar(this.id, this.voto).subscribe((res) => {
+        this.toastCtrl.create({
+          message: 'Valoración enviada correctamente',
+          duration: 3000
+        }).present();
+      });
     }
-    console.log(this.voto);
-    this.bbddJuegos.votar(this.id, this.voto).subscribe();
   }
 }

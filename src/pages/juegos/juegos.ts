@@ -28,7 +28,8 @@ export class JuegosPage {
 
   buscar(searchEvent) {
     let busqueda: String = searchEvent.target.value;
-    if (busqueda.trim() === '') {
+    console.log(busqueda);
+    if (busqueda === undefined || busqueda.trim() === '') {
       this.juegos = this.juegosOriginales;
     } else {
       this.bbddJuegos.buscaJuegos(busqueda).subscribe(res => this.juegos = res);
