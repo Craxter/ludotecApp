@@ -24,16 +24,18 @@ export class JuegosPage {
   ) {
     this.idsJuegosUsuario = [];
     config.getUsuario().subscribe((user) => {
-      bbddJuegos.cargaJuegosUsuario(user.ID).subscribe((coleccion) => {
-        for (const juego of coleccion) {
-          this.idsJuegosUsuario.push(Number(juego.j_ID));
-        }
-        bbddJuegos.cargaJuegos().subscribe(juegos => {
-          this.juegos = juegos;
-          this.juegosOriginales = juegos;
+      if (user !== null) {
+        bbddJuegos.cargaJuegosUsuario(user.ID).subscribe((coleccion) => {
+          for (const juego of coleccion) {
+            this.idsJuegosUsuario.push(Number(juego.j_ID));
+          }
         });
-      })
-    })
+      }
+      bbddJuegos.cargaJuegos().subscribe(juegos => {
+        this.juegos = juegos;
+        this.juegosOriginales = juegos;
+      });
+    });
   }
 
   verDetalles(ID: string) {
