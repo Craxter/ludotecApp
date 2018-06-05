@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { Juego } from "../../models/juego";
 import { BbddJuegosProvider } from "../../providers/bbdd-juegos/bbdd-juegos";
@@ -20,22 +20,10 @@ export class JuegosPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public bbddJuegos: BbddJuegosProvider,
-    public config: ConfiguracionProvider
+    public config: ConfiguracionProvider,
+    public loading: LoadingController
   ) {
     this.idsJuegosUsuario = [];
-    config.getUsuario().subscribe((user) => {
-      if (user !== null) {
-        bbddJuegos.cargaJuegosUsuario(user.ID).subscribe((coleccion) => {
-          for (const juego of coleccion) {
-            this.idsJuegosUsuario.push(Number(juego.j_ID));
-          }
-        });
-      }
-      bbddJuegos.cargaJuegos().subscribe(juegos => {
-        this.juegos = juegos;
-        this.juegosOriginales = juegos;
-      });
-    });
   }
 
   verDetalles(ID: string) {
@@ -57,17 +45,36 @@ export class JuegosPage {
         for (const juego of coleccion) {
           this.idsJuegosUsuario.push(Number(juego.j_ID));
         }
-        this.bbddJuegos.cargaJuegos().subscribe(juegos => {
-          this.juegos = juegos;
-          this.juegosOriginales = juegos;
-          refresher.complete();
-        });
-      })
-    })
+      });
+      this.bbddJuegos.cargaJuegos().subscribe(juegos => {
+        this.juegos = juegos;
+        this.juegosOriginales = juegos;
+        refresher.complete();
+      });
+    });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad JuegosPage');
+    let loader = this.loading.create({
+      content: 'Cargando juegos',
+    });
+
+    loader.present().then(() => {
+      this.config.getUsuario().subscribe((user) => {
+        if (user !== null) {
+          this.bbddJuegos.cargaJuegosUsuario(user.ID).subscribe((coleccion) => {
+            for (const juego of coleccion) {
+              this.idsJuegosUsuario.push(Number(juego.j_ID));
+            }
+          });
+        }
+        this.bbddJuegos.cargaJuegos().subscribe(juegos => {
+          this.juegos = juegos;
+          this.juegosOriginales = juegos;
+          loader.dismiss();
+        });
+      });
+    });
   }
 
 }

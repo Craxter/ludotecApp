@@ -21,7 +21,7 @@
   <ion-list no-lines>
     <ion-item *ngFor="let usuario of usuarios">
       <button ion-item (click)="perfilUsuario(usuario.ID)">
-        <ion-icon name="person" item-left *ngIf="usuario.ID==user.ID"></ion-icon>
+        <ion-icon name="person" item-left *ngIf="user !== null && usuario.ID===user.ID"></ion-icon>
         <h2>{{ usuario.nombre }}</h2>
         <ion-icon name="arrow-forward" item-right></ion-icon>
       </button>

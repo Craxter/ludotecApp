@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { PerfilPage } from "../perfil/perfil";
 
@@ -23,15 +23,10 @@ export class UsuariosPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public bbddJuegos: BbddJuegosProvider,
-    public config: ConfiguracionProvider
+    public config: ConfiguracionProvider,
+    public loading: LoadingController
   ) {
-    config.getUsuario().subscribe((user) => {
-      this.user = user;
-      bbddJuegos.cargaUsuarios().subscribe(usuarios => {
-        this.usuarios = usuarios;
-        this.usuariosOriginales = usuarios;
-      });
-    });
+    this.user = null;
   }
 
   perfilUsuario(ID: String) {
@@ -45,5 +40,24 @@ export class UsuariosPage {
     } else {
       this.bbddJuegos.buscaUsuarios(busqueda).subscribe(res => this.usuarios = res);
     }
+  }
+
+  ionViewDidLoad() {
+    let loader = this.loading.create({
+      content: 'Cargando usuarios',
+    });
+
+    loader.present().then(() => {
+      this.config.getUsuario().subscribe((user) => {
+        if(user!==null){
+          this.user = user;
+        }
+        this.bbddJuegos.cargaUsuarios().subscribe(usuarios => {
+          this.usuarios = usuarios;
+          this.usuariosOriginales = usuarios;
+          loader.dismiss();
+        });
+      });
+    });
   }
 }
