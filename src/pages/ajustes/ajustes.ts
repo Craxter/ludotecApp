@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, Toast } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ConfiguracionProvider } from '../../providers/configuracion/configuracion';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @IonicPage()
 @Component({
@@ -10,34 +11,29 @@ import { ConfiguracionProvider } from '../../providers/configuracion/configuraci
 export class AjustesPage {
 
   tema: String;
-  toast: Toast;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public toastCtrl: ToastController,
+    public toast: ToastProvider,
     public setting: ConfiguracionProvider
   ) {
     this.setting.seleccionarTema().subscribe((res) => this.tema = res);
     this.recogerModo();
   }
-
+  
   cambiarModo() {
     if (this.tema === 'light-theme') {
       this.setting.cambiarTema('dark-theme');
     } else {
       this.setting.cambiarTema('light-theme');
     }
-    this.toast.present();
   }
-
+  
   recogerModo() {
     this.setting.seleccionarTema().subscribe((res) => {
       let mensaje = 'Modo nocturno';
       res === 'dark-theme' ? mensaje += ' activado' : mensaje += ' desactivado';
-      this.toast = this.toastCtrl.create({
-        message: mensaje,
-        duration: 3000
-      });
+      this.toast.crearToast(mensaje);
     });
   }
 }

@@ -7,6 +7,7 @@ import { Usuario } from "../../models/usuario";
 
 import { BbddJuegosProvider } from "../../providers/bbdd-juegos/bbdd-juegos";
 import { ConfiguracionProvider } from '../../providers/configuracion/configuracion';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @IonicPage()
 @Component({
@@ -24,7 +25,8 @@ export class UsuariosPage {
     public navParams: NavParams,
     public bbddJuegos: BbddJuegosProvider,
     public config: ConfiguracionProvider,
-    public loading: LoadingController
+    public loading: LoadingController,
+    public toast: ToastProvider
   ) {
     this.user = null;
   }
@@ -55,6 +57,9 @@ export class UsuariosPage {
         this.bbddJuegos.cargaUsuarios().subscribe(usuarios => {
           this.usuarios = usuarios;
           this.usuariosOriginales = usuarios;
+          loader.dismiss();
+        }, (error) => {
+          this.toast.crearToast('No se han podido cargar los usuarios');
           loader.dismiss();
         });
       });

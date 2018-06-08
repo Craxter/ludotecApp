@@ -1,9 +1,3 @@
-<!--
-  Generated template for the JuegosPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -16,13 +10,13 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding hide-fab-top>
   <ion-refresher (ionRefresh)="actualizar($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <h3>Lista de juegos</h3>
   <ion-searchbar animated placeholder="Busca tu juego" (ionInput)="buscar($event)"></ion-searchbar>
-  <ion-list [virtualScroll]="juegos">
+  <ion-list no-lines [virtualScroll]="juegos" approxItemHeight="250px" bufferRatio="4">
     <button ion-item detail-none *virtualItem="let juego" (click)="verDetalles(juego.ID)">
       <ion-icon name="checkmark-circle" class="coleccion" color="secondary" *ngIf="idsJuegosUsuario.indexOf(juego.ID)>=0"></ion-icon>
       <ion-thumbnail item-left>
@@ -32,4 +26,9 @@
       <ion-icon name="arrow-forward" item-right></ion-icon>
     </button>
   </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="subir()">
+      <ion-icon name="arrow-up"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
