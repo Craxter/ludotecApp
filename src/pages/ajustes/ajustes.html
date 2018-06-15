@@ -11,9 +11,14 @@
 
 
 <ion-content padding>
-  <ion-item (click)="cambiarModo()">
-    <ion-icon id="bulb" name="bulb" item-left></ion-icon>
-    <ion-label>Modo nocturno</ion-label>
-    <ion-toggle [checked]="tema==='dark-theme'"></ion-toggle>
-  </ion-item>
+  <ion-list no-lines>
+    <ion-item (click)="cambiarModo()">
+      <ion-icon id="bulb" name="bulb" item-left></ion-icon>
+      <ion-label>Modo nocturno</ion-label>
+      <ion-toggle [checked]="tema==='dark-theme'"></ion-toggle>
+    </ion-item>
+    <ion-item (click)="cambiarPass()" *ngIf="user!==null">
+      <ion-label>Cambiar contraseña</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

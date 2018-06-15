@@ -1,40 +1,23 @@
 <ion-header no-border>
-
   <ion-navbar>
-    <ion-title>Iniciar Sesion</ion-title>
+    <ion-title>Iniciar Sesión</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-  <div padding>
-    <ion-row>
-      <ion-col>
-        <img class="logo" src="assets/imgs/dice-logo.png" />
-      </ion-col>
-    </ion-row>
-    <form (ngSubmit)="login()">
-      <ion-row>
-        <ion-col>
-          <ion-list inset class="no-border">
-            <ion-item>
-              <ion-label>Usuario</ion-label>
-              <ion-input type="text" [(ngModel)]="user.nombre" (ngModelChange)='validar()' name="nombre"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label>Contraseña</ion-label>
-              <ion-input type="password" [(ngModel)]="user.pass" (ngModelChange)='validar()' name="pass"></ion-input>
-            </ion-item>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <button ion-button class="login-button" [disabled]="!validado">Iniciar sesión</button>
-          <button ion-button type="button" class="login-button" [disabled]="!validado" (click)="signup()">Regístrate</button>
-        </ion-col>
-      </ion-row>
+    <img class="logo" src="assets/imgs/dice-logo.png" />
+    <form #loginForm="ngForm" (ngSubmit)="login()">
+      <ion-list inset class="no-border">
+        <ion-item>
+          <ion-label>Usuario</ion-label>
+          <ion-input type="text" [(ngModel)]="user.nombre" (ngModelChange)='validar()' name="nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="user.pass" (ngModelChange)='validar()' name="pass"></ion-input>
+        </ion-item>
+      </ion-list>
+      <button ion-button class="login-button" [disabled]="!validado">Iniciar sesión</button>
+      <button ion-button type="button" class="login-button" [disabled]="!validado" (click)="signup()">Regístrate</button>
     </form>
-  </div>
 </ion-content>

@@ -83,7 +83,7 @@ export class MyApp {
       buttons: [
         {
           text: 'Cancelar',
-          role: 'cancelar',
+          role: 'cancel',
           handler: () => {
             console.log('Operacion cancelada');
           }

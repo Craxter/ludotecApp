@@ -3,18 +3,17 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{usuario?.nombre || "Usuario"}}</ion-title>
+    <ion-title>{{usuario?.nombre}}</ion-title>
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
   <ion-item>
-    <ion-label>Juegos de {{usuario?.nombre || "Usuario"}}</ion-label>
+    <ion-label>Juegos de {{usuario?.nombre}}</ion-label>
     <ion-badge item-right>{{coleccion?.length}}</ion-badge>
   </ion-item>
-  <ion-list>
-    <button ion-item *ngFor="let juego of coleccion" (click)="verDetalles(juego.j_ID)">
+  <ion-list no-lines [virtualScroll]="coleccion" approxItemHeight="250px" bufferRatio="4">
+    <button ion-item *virtualItem="let juego" (click)="verDetalles(juego.j_ID)">
       <ion-thumbnail item-left>
         <img [src]="juego.j_img" onerror="this.src='assets/imgs/default-game.png'">
       </ion-thumbnail>

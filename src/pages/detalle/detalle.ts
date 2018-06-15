@@ -96,9 +96,7 @@ export class DetallePage {
   }
 
   agregarJuego() {
-    console.log('entra');
     if (!this.propietario) {
-      console.log('guarda');
       this.bbddJuegos.guardarJuegoColeccion(this.id).subscribe((res) => {
         this.propietario = true;
         this.toast.crearToast('Juego añadido a la colección');
@@ -106,7 +104,6 @@ export class DetallePage {
         this.toast.crearToast('Error al añadir a la colección');
       });
     } else {
-      console.log('borra');
       this.bbddJuegos.borrarJuegoColeccion(this.id).subscribe((res) => {
         this.propietario = false
         this.toast.crearToast('Juego eliminado de la colección');
